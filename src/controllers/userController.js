@@ -1,32 +1,33 @@
-const userService= require("../services/userService")
+const userService = require("../services/userService");
 
-const registerUser=async(req,res)=>{
+const registerUser = async (req, res) => {
     try {
-        const userData=req.body;
+        const userData = req.body;
 
-        const user=await userService.registerUser(userData);
+        const user = await userService.registerUser(userData);
 
         res.status(201).json({
-            message:"successfully registered",
-            userId:user
-        })
+            message: "Successfully registered",
+            userId: user._id // Returning only the user ID
+        });
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-const loginUser = async(req,res)=>{
+const loginUser = async (req, res) => {
     try {
-        const userData=req.body;
+        const userData = req.body;
 
-        const {token ,userId}=await userService.loginUser(userData);
+        const { token, userId } = await userService.loginUser(userData);
         res.status(200).json({
-            message:"user successfully logged",
-            token,userId
-        })
-
+            message: "User successfully logged in",
+            token,
+            userId
+        });
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message });
     }
-}
-module.exports={registerUser ,loginUser};
+};
+
+module.exports = { registerUser, loginUser };
